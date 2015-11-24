@@ -6,6 +6,7 @@ MYDIR="allfiles"
 
 mkdir -p $MYDIR
 cp *.tex $MYDIR
+cp *.bib $MYDIR
 cp *.cls $MYDIR
 cp *.clo $MYDIR
 cp *.bst $MYDIR
