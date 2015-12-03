@@ -542,7 +542,7 @@ grestore
   \section{Memory efficient classifier representation}  
   \label{sec:memory}
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-    We learn a linear discriminative classifier with weight vector $\vec{w}_j$ and bias $b_j$ for each image $j$ in the database.   
+    We learn a (calibrated) linear discriminative classifier with weight vector $\vec{w}_j$ and bias $b_j$ for each image $j$ in the database.\footnote{When the calibration by re-normalization method is used the $\vec{w}_j$ contains the re-normalized weights and the bias $b_j$ is zero. However, to cover both calibration methods we include the bias term in the derivations in this section.}    
     These classifier parameters become the new representation for each image. 
     %  This becomes the new representation for each image in the database. 
     In this section we discuss how the classifier parameters can be stored in a memory efficient manner that is amenable for indexing. 
@@ -1318,13 +1318,13 @@ grestore
       We observe that in $237$ cases a low-ranked true positive image by the baseline (ranked $40-70$)  is attracted into the short list by the w-norm method, resulting in an improvement.  Note that in many other cases our method improves ranking but here we only count the cases for which the baseline method does not have any true positives in the top $20$ short-list. 
       %R1
       % On the other hand, in $39$ cases our method makes the results worse and removes a correct image from the top $20$ short-list but typically only to top $40$.
-      \textcolor{petr}{On the other hand, in $39$ cases our method downrankes correct images from the top $20$ short-list. However, these images are typically downranked only slightly and still occur in top 40 shortlist.}
+      \textcolor{petr}{On the other hand, in $39$ cases our method downrankes correct images appearing in the top $20$ short-list. However, these images are typically downranked only slightly and still occur in the top 40 shortlist.}
 
       Finally, we observe that \textcolor{petr} {the downranking} typically occurs on hard examples where the baseline performance is already bad. 
       %R1
       % When visually inspecting the failure cases we observed that our method typically fails on queries containing a big portion of the sky clouds or vegetation, narrow streets or tunnels and sometimes retrieves images capturing the same building from a different viewpoint or a larger distance.
       \textcolor{petr}{
-        When visually inspecting the failure cases we have observed that our method typically fails on queries containing a large amount of sky with clouds or vegetation and images containing narrow streets and tunnels. Our method also sometimes retrieves images capturing the same building from a different side or a large distance.
+        When visually inspecting the failure cases we have observed that our method typically fails on queries containing a large amount of clouds or vegetation and images containing narrow streets and tunnels. Our method also sometimes retrieves images capturing the same building from a different side or a large distance.
       }
 
 
