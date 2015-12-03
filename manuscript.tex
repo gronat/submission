@@ -178,7 +178,7 @@ grestore
     \textcolor{petr}{capturing the same location}.
     In particular, we train a classifier {\em for each location on the map} in a similar manner to per-exemplar classification in object recognition~\cite{Malisiewicz11}. 
     \textcolor{petr}{
-      By \em{location} we mean a scene captured by a camera, hence using our terminology, a camera heading to the north captures different location than a camera heading to the south, even those cameras share the same GPS location. 
+      By \em{location} we mean a scene captured by a camera, hence using our terminology, a camera heading to the north captures different location than a camera heading to the south, even though these two cameras share the same GPS location. 
     }
   }
 
@@ -528,7 +528,7 @@ grestore
     %
     % The intuition is that when $\vec{q}$ is $L_2$ normalized, equation~\eqref{eq:linear3} is equivalent to computing the normalized dot-product between vectors $\vec{q}$ and $\vec{w}$. 
     \textcolor{petr}{
-      Since $\vec{q}$ is $L_2$ normalized, the reason of particular choice of $\alpha_j$ and $\beta_j$ is that the equation equation~\eqref{eq:linear3} is equivalent to computing the normalized dot-product between vectors $\vec{q}$ and $\vec{w}$.
+      Since $\vec{q}$ is $L_2$ normalized, the outcome of the particular choice of $\alpha_j$ and $\beta_j$ is that the equation~\eqref{eq:linear3} is equivalent to computing the normalized dot-product between vectors $\vec{q}$ and $\vec{w}$.
     }
     This was found to work well in image retrieval~\cite{Sivic03} or matching whitened HOG descriptors~\cite{Doersch13}.
     In this work we investigate whether this intuition about descriptor matching can be used as a form of calibration for the learnt place-specific classifier. 
@@ -673,7 +673,7 @@ grestore
     In table~\ref{tab:recallBOW}, we also compare performance to our implementation of the confuser suppression approach (Conf. supp.) of~\cite{Knopp2010} that, in each database image, detects and removes features that frequently appear at other far-away locations (using parameters $t=3.5$ and $w=70$).  
     % R1:
     %The results show an improvement by our method, specially at recall@1.
-    \textcolor{petr} {Our results show an improvements, specially at recall@1.}
+    \textcolor{petr} {Our results show an improvement, specially at recall@1.}
 
 
     Inspecting the detailed plots in figure~\ref{fig:recallBOW} we further note that the  \emph{p-val} calibration performs slightly better than the \emph{w-norm} calibration for shorter top $K$ shortlists but this effect is reversed for larger $K$. This could be attributed to the fact that the \emph{p-val} calibration uses the negative data to control false positive errors, but has less control over false negatives, as discussed in section~\ref{sec:discussion}. 
@@ -1318,13 +1318,13 @@ grestore
       We observe that in $237$ cases a low-ranked true positive image by the baseline (ranked $40-70$)  is attracted into the short list by the w-norm method, resulting in an improvement.  Note that in many other cases our method improves ranking but here we only count the cases for which the baseline method does not have any true positives in the top $20$ short-list. 
       %R1
       % On the other hand, in $39$ cases our method makes the results worse and removes a correct image from the top $20$ short-list but typically only to top $40$.
-      \textcolor{petr}{On the other hand, in $39$ cases our method downgrades images from the top $20$ short-list. However, these images typically occur in top 40 shortlist.}
+      \textcolor{petr}{On the other hand, in $39$ cases our method downrankes correct images from the top $20$ short-list. However, these images are typically downranked only slightly and still occur in top 40 shortlist.}
 
-      Finally, we observe that \textcolor{petr} {the downgrading} typically occurs on hard examples where the baseline performance is already bad. 
+      Finally, we observe that \textcolor{petr} {the downranking} typically occurs on hard examples where the baseline performance is already bad. 
       %R1
       % When visually inspecting the failure cases we observed that our method typically fails on queries containing a big portion of the sky clouds or vegetation, narrow streets or tunnels and sometimes retrieves images capturing the same building from a different viewpoint or a larger distance.
       \textcolor{petr}{
-        When visually inspecting the failure cases we observed that our method typically fails on queries containing a big portion of the sky clouds or vegetation and images containing narrow streets and tunnels. Our method sometimes retrieves images capturing the same building from a different viewpoint or a larger distance.
+        When visually inspecting the failure cases we have observed that our method typically fails on queries containing a large amount of sky with clouds or vegetation and images containing narrow streets and tunnels. Our method also sometimes retrieves images capturing the same building from a different side or a large distance.
       }
 
 
