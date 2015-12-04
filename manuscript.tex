@@ -105,21 +105,18 @@ grestore
 
 \author{Petr Gron{\'a}t         \and
         Josef {S}ivic          \and
-        Tom{\'a}{\v s} Pajdla   \and
-        Guillaume Obozinski%etc.
+        Guillaume Obozinski   \and
+        Tom{\'a}{\v s} Pajdla   %etc.
 }
 
 %\authorrunning{Short form of author list} % if too long for running head
 
-\institute{F. Author \at
-              first address \\
-              Tel.: +123-45-678910\\
-              Fax: +123-45-678910\\
-              \email{fauthor@example.com}           %  \\
+\institute{Petr Gron{\'a}t \at
+              2 rue Simone Iff \\
+              75012 Paris, France\\
+              \email{petr.gronat@inria.fr}           %  \\
 %             \emph{Present address:} of F. Author  %  if needed
-           \and
-           S. Author \at
-              second address
+           %\and
 }
 \vspace{-5mm}
 \date{Received: date / Accepted: date}
@@ -178,7 +175,7 @@ grestore
     \textcolor{petr}{capturing the same location}.
     In particular, we train a classifier {\em for each location on the map} in a similar manner to per-exemplar classification in object recognition~\cite{Malisiewicz11}. 
     \textcolor{petr}{
-      By \em{location} we mean a scene captured by a camera, hence using our terminology, a camera heading to the north captures different location than a camera heading to the south, even though these two cameras share the same GPS location. 
+      (By \textit{location} we mean a scene captured by a camera, hence using our terminology, a camera heading to the north captures different location than a camera heading to the south, even though these two cameras share the same GPS location. In the following text we use terms \textit{place} and \textit{location} interchangeably.)
     }
   }
 
@@ -202,7 +199,7 @@ grestore
   The task of geo-localizing a given input query photograph has recently received considerable attention. The output can be a coarse geo-localization on the level of continents and cities~\cite{Doersch12,Hays2008,Kalogerakis09} or a name of the depicted landmark~\cite{Li09}.  In this work we focus on visually recognizing the ``same place" by finding an image in geo-tagged database that depicts the same building facade or street-corner as shown in the query~\cite{Chen11,Cummins09,Knopp2010,Schindler07,Torii2013,Zamir10}.
 
 
-  This {\em visual place recognition} problem is typically treated as large-scale instance-level retrieval~\cite{Cummins09,Chen11,Knopp2010,Schindler07,Torii2013,Zamir10}, where images are represented using local invariant features~\cite{Lowe04} encoded and aggregated into the bag-of-visual-words~\cite{Csurka04,Sivic03} or Fisher vector~\cite{Jegou12} representations. The image database can be further augmented by 3D point clouds~\cite{Klinger13}, automatically reconstructed by large-scale structure from motion (SfM)~\cite{Agarwal-ICCV-2009,Klinger13}, which enables accurate prediction of query image camera position~\cite{Li12,Sattler12}.
+  This {\em visual place recognition} problem is typically treated as large-scale instance-level retrieval~\cite{Cummins09,Chen11,Knopp2010,Schindler07,Torii2013,Zamir10},  where images are represented using local invariant features~\cite{Lowe04} encoded and aggregated into the bag-of-visual-words~\cite{Csurka04,Sivic03} or Fisher vector~\cite{Jegou12} representations. The image database can be further augmented by 3D point clouds~\cite{Klinger13}, automatically reconstructed by large-scale structure from motion (SfM)~\cite{Agarwal-ICCV-2009,Klinger13}, which enables accurate prediction of query image camera position~\cite{Li12,Sattler12}.
   In contrast, in this work we investigate learning a discriminative place-specific image representation. A similar idea has been recently explored in~\cite{Cao13} who learn a graph-based discriminative representation for landmark image collections where typically many images are available for each landmark.
   In this work, we focus on street-level images such as Google Street View, which have greater coverage, but typically only one or a small number of images are  available for each 
   %place
@@ -261,7 +258,7 @@ grestore
    Similar to~\cite{Knopp2010}, we use the available geotags to construct the negative set $\mathcal N_j$ for each image $j$. The negative set is constructed so as to concentrate difficult negative examples, i.e.\ from images that are far away from the location of image $j$ and similar to the target image as measured by the dot product between their feature vectors. The details of the construction procedure will be given in section~\ref{sec:experiments}.  The positive set $\mathcal P_j$ is represented by a single positive example
    , which is $\vec{x}_j$ itself. 
    \textcolor{petr}{
-    For some locations the positive set can be expanded, details of this procedure will be given in~\ref{sub:parametersOfPerLoc}.
+    For some locations the positive set can be expanded, details of this procedure will be given in~\ref{sub:paramsOfPerLoc}.
    }
 
    Each SVM classifier produces a \textcolor{petr}{classification} score $s_j$ which is a priori not comparable with the score of the other classifiers. A calibration of these \textcolor{petr}{classification} scores will therefore be key to convert them to comparable scores $f_j$. This calibration problem is more difficult than usual given that we only have a single positive example and will be addressed in section~\ref{sec:calibration}.
@@ -305,17 +302,17 @@ grestore
 \label{sec:calibration}
 %%%%%%%%%%%%%%%%%%%%%%%%%%  
   In this section we describe a classifier calibration method that exploits the availability of large amounts of negative data, i.e.\ images from other far away locations in the database.
-  In particular, the method estimates the significance of the score of a test example compared to the typical score of  the (plentifully available) negative examples. Intuitively, we will use a large dataset of negative examples to calibrate the individual classifiers so that they {\em reject the same number of negative examples} at each level of the calibrated score.   We will expand this idea in detail using the concepts from hypothesis testing.
+  In particular, the method estimates the significance of the \textcolor{petr}{classification} score of a test example compared to the typical \textcolor{petr}{classification} score of  the (plentifully available) negative examples. Intuitively, we will use a large dataset of negative examples to calibrate the individual classifiers so that they {\em reject the same number of negative examples} at each level of the calibrated score.   We will expand this idea in detail using the concepts from hypothesis testing.
 
 
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    \subsection{Calibration \emph{via} significance levels}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-      In the following, we view  the problem of deciding whether a query image matches a given location based on the corresponding SVM score as a hypothesis testing problem. In particular, we appeal to ideas from the traditional frequentist hypothesis testing framework also known as Neyman-Pearson (NP) framework (see e.g.~\cite{casella2001statistical}, chap.~8).
+      In the following, we view  the problem of deciding whether a query image matches a given location based on the corresponding SVM \textcolor{petr}{classification} score as a hypothesis testing problem. In particular, we appeal to ideas from the traditional frequentist hypothesis testing framework also known as Neyman-Pearson (NP) framework (see e.g.~\cite{casella2001statistical}, chap.~8).
 
       We define the null hypothesis as $H_0=\{$the image is a random image$\}$ and the alternative as $H_1=\{$the image matches the particular location$\}$. The NP framework focuses on the case where the distribution of the data under $H_0$ is well known, whereas the distribution under $H_1$ is not accessible or too complicated to model, which matches perfectly our setting.
 
-      In the NP framework, the \emph{significance level} of a score is measured by the p-value or equivalently by the value of the cumulative density function  (cdf) of the distribution of the negatives at a given score value. The cdf is the function $F_0$ defined by $F_0(s)=\PP(S_0\leq s)$, where $S_0$ is a random variable corresponding to the scores of negative data (see figure~\ref{fig:qntExample} for an illustration of the relation between the cdf and the density of the function). The cdf 
+      In the NP framework, the \emph{significance level} of a score is measured by the p-value or equivalently by the value of the cumulative density function  (cdf) of the distribution of the negatives at a given score value. The cdf is the function $F_0$ defined by $F_0(s)=\PP(S_0\leq s)$, where $S_0$ is a random variable corresponding to the \textcolor{petr}{classification} scores of negative data (see figure~\ref{fig:qntExample} for an illustration of the relation between the cdf and the density of the function). The cdf 
       (
         or the corresponding p-value\footnote{
             The notion most commonly used in statistics is in fact the p-value. The p-value associated to a score is the quantity $\alpha(s)$ defined by $\alpha(s)=1-F_0(s)$; so the more significant the score is, the closer to $1$ the cdf value is, and the closer to $0$ the p-value is. To keep the presentation simple, we avoid the formulation in terms of p-values and we only talk of the probabilistic calibrated values obtained from the cdf $F_0$.
@@ -329,11 +326,11 @@ grestore
       \end{equation}
       %
       \noindent
-      where $(s_n)_{1\leq n \leq \Ncal }$ are the SVM scores associated with $\Ncal$ negative examples used for calibration. Note that no positive examples are involved in the construction of the cumulative density function.
+      where $(s_n)_{1\leq n \leq \Ncal }$ are the SVM \textcolor{petr}{classification} scores associated with $\Ncal$ negative examples used for calibration. Note that no positive examples are involved in the construction of the cumulative density function.
       $\hat{F}_0(s)$ is the fraction of the negative examples used for calibration (ideally held out negative examples) that have a score below a given value $s$.
       Computing $\hat{F}_0$ exactly would require to store all the SVM scores for all the calibration data for all classifiers, so in practice, we only keep a fraction of the larger scores.
-      We also interpolate the empirical cdf between consecutive datapoints so that instead of being a staircase function it is a continuous piecewise linear function such as illustrated in figure~\ref{fig:calib}. Given a query, we first compute its SVM score $s_q$ and then compute the calibrated probability $f(q)=\hat{F}_0(s_q)$.
-      We obtain a similar calibrated probability $f_j(q)$ for each of the SVMs associated with each of the target locations, which can now be ranked.
+      We also interpolate the empirical cdf between consecutive datapoints so that instead of being a staircase function it is a continuous piecewise linear function such as illustrated in figure~\ref{fig:calib}. Given a query, we first compute its SVM \textcolor{petr}{classification} score $s_q$ and then compute the calibrated probability, \textcolor{petr}{the score function} $f(q)=\hat{F}_0(s_q)$.
+      We obtain a similar calibrated \textcolor{petr}{score function} $f_j(q)$ for each of the SVMs associated with each of the target locations, which can now be ranked.
       %
       Two other examples of score calibration functions are shown in figure~\ref{fig:3qVSw} in section~\ref{sec:results}. Note that while figure~\ref{fig:calib} illustrates only few points on the cdf, the two plots in figure~\ref{fig:3qVSw} show a complete cdf that contains on the order of 25k data points. Note also that the two cumulative density functions in figure~\ref{fig:3qVSw} are similar but not identical.
       %
@@ -376,7 +373,7 @@ grestore
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \subsection{Summary of the calibration procedure}
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    For each trained place-specific classifier $s_j$ we construct the empirical cumulative density function~\eqref{eq:empiricalCDF} of scores of the negative examples and keep only its top $K$ values. This can be done offline and the procedure is summarized in Algorithm \ref{alg:offline}. 
+    For each trained place-specific classifier $s_j$ we construct the empirical cumulative density function~\eqref{eq:empiricalCDF} of \textcolor{petr}{classification} scores of the negative examples and keep only its top $K$ values. This can be done offline and the procedure is summarized in Algorithm \ref{alg:offline}. 
     %
     At query time, given a query image descriptor $\vec{q}$, we compute the uncalibrated classification score $s_j(\vec{q})$ and then use the stored cdf values to compute the calibrated score $f_j(\vec{q})$. This procedure is performed for each database image $j$ and is summarized in Algorithm \ref{alg:online}.
     Finally, the best candidate database image is selected by equation~\eqref{eq:class}. Alternatively, candidate database images can be also ranked according to the calibrated score.
@@ -448,10 +445,16 @@ grestore
    \label{sec:discussion}
    %%%%%%%%%%%%%%%%%%%%%%% 
       It should be noted that basing the calibration only on the negative data has the advantage that we privilege precision over recall, which is justified given the imbalance of the available training data (many more negatives than positives).
-      Indeed, since we are learning with a single positive example, intuitively, we cannot guarantee that the learned partition of the space will generalize well to other positives, whose scores in the test set can potentially drop significantly. % (this is indeed what we observe in practice). 
-      By contrast, since we are learning from a comparatively large number of negative examples, we can trust the fact that new negative examples will stay in the half-space containing the negative training set, so that their scores are very unlikely to be large. Our method is therefore based on the fact that we can measure reliably how surprising a high score would be if it was the score of a negative example. This exactly means that we can control false positives (type I error) reasonably well but not false negatives (type II error or equivalently the power of our test/classifier), exactly as in the Neyman-Pearson framework.
+      Indeed, since we are learning with a single positive example 
+      \textcolor{petr}{(or a very few)}, 
+      intuitively, we cannot guarantee that the learned partition of the space will generalize well to other positives, whose scores in the test set can potentially drop significantly. % (this is indeed what we observe in practice). 
+      By contrast, since we are learning from a comparatively large number of negative examples, we can trust the fact that new negative examples will stay in the half-space containing the negative training set, so that their scores are very unlikely to be large. Our method is therefore based on the fact that we can measure reliably how surprising a high 
+      \textcolor{petr}{classification}
+      score would be if it was the score of a negative example. This exactly means that we can control false positives (type I error) reasonably well but not false negatives (type II error or equivalently the power of our test/classifier), exactly as in the Neyman-Pearson framework.
 
-      An additional reason for not relying on positive examples for the calibration in our case is that (even if we had sufficiently many of them) the positive examples that we collect using location and geometric verification from the geotagged database typically have illumination conditions that are extremely similar to each other and not representative of the distribution of test positives which can have very different illuminations. This is because of the controlled nature of the capturing process of geotagged street-level imagery (e.g.\ Google Street View) used for experiments in this work. Close-by images are typically captured at a similar time (e.g. on the same day) and under similar imaging conditions.
+      An additional reason for not relying on positive examples for the calibration in our case is that (even if we had sufficiently many of them) the positive examples that we collect using location and geometric verification from the geotagged database
+      \textcolor{petr}{(details in Section \ref{sub:paramsOfPerLoc})}
+      typically have illumination conditions that are extremely similar to each other and not representative of the distribution of test positives which can have very different illuminations. This is because of the controlled nature of the capturing process of geotagged street-level imagery (e.g.\ Google Street View) used for experiments in this work. Close-by images are typically captured at a similar time (e.g. on the same day) and under similar imaging conditions.
 
       Scheirer et al.~\cite{Scheirer12} propose a method, which is related to ours, and calibrate SVM scores by computing the corresponding cdf value of a Weibull distribution fitted to the top negative scores. The main difficulty is that the Weibull model should be fitted only to the tail of the distribution of the negatives, which is in general difficult to identify. As a heuristic, Scheirer et al. propose to fit the Weibul model to false positives (i.e. the negative samples classified incorrectly as positives). But in our case, most of the exemplar SVMs that we are training have zero false positives in a held out set, which precludes the application of their method. 
 
@@ -474,7 +477,7 @@ grestore
   As a result,  computing and storing the calibration functions becomes feasible for very large datasets with 1M images.
 
   \subsection{Affine calibration model}
-    Using the affine calibration model we transform the uncalibrated score $s_j(\vec{q})$ of query $\vec{q}$ with a linear function 
+    Using the affine calibration model we transform the uncalibrated \textcolor{petr}{classification}score $s_j(\vec{q})$ of query $\vec{q}$ with a linear function 
     %
       \begin{equation}
        f_j(\vec{q}) = \alpha_j s_j(\vec{q}) + \beta_j,
@@ -643,11 +646,11 @@ grestore
       It is worth noting that the graph contains many isolated nodes. This typically indicates that the viewpoint change between two adjacent panoramas is large. For each image in the database, we include between zero and five extra positive examples that are directly connected in the graph.
 
 
-      For the support vector machine classifier (SVM) training we use {\tt libsvm} \cite{libsvm}. We use the same $C_1$ and $C_2$ parameters for all per-exemplar classifiers, but find the optimal value of the parameters for each image representation by a cross-validation evaluating performance on a held out query set.
+      For the support vector machine classifier (SVM) training we use {\tt libsvm} \cite{libsvm}. We use the same global $C_1$ and $C_2$ parameters for all per-exemplar classifiers, but find the optimal value of the parameters for each image representation by a cross-validation evaluating performance on a held out query set.
 
       For the calibration by re-normalization, we $L_2$ normalize the learned $\vec{w}_j$ using equation~\eqref{eq:linear3} and use this normalized vector as the new image descriptor $\vec{x}'_j$ for image $j$. At query time we compute the descriptor $\vec{q}$ of the query image and measure its similarity score to the learnt descriptors $\vec{x}'_j$ for each database image by equation~\eqref{eq:class}.
 
-      For the p-value calibration, we take the learnt classifier for each database image $j$ and compute its SVM score for all other database images to construct its empirical cumulative density function~\eqref{eq:empiricalCDF}. We keep only the top 1,000 values that, in turn, represent the calibration function. At query time, given the query descriptor $\vec{q}$, we compute the SVM score~\eqref{eq:linear} for each database image $j$, and compute its calibrated SVM score $f_j$~\eqref{eq:empiricalCDF}.
+      For the p-value calibration, we take the learnt classifier for each database image $j$ and compute its SVM \textcolor{petr}{classification} score for all other database images to construct its empirical cumulative density function~\eqref{eq:empiricalCDF}. We keep only the top 1,000 values that, in turn, represent the calibration function. At query time, given the query descriptor $\vec{q}$, we compute the SVM score~\eqref{eq:linear} for each database image $j$, and compute its calibrated SVM score $f_j$~\eqref{eq:empiricalCDF}.
 
 
 %%%%%%%%%%%%%%%%%%%%
